@@ -3,6 +3,10 @@ const express = require('express');
 const {  connectDb } = require('./db/mongoDb');
 const notFound = require('./middlewares/not_found');
 const authRouter = require('./routes/auth');
+const orderRouter = require('./routes/order');
+const productRouter = require('./routes/product');
+const reviewRouter = require('./routes/review');
+const userRouter = require('./routes/user');
 
 
 const app = express();
