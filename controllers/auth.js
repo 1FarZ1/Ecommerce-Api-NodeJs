@@ -15,15 +15,24 @@ let register = async (req,res)=>{
         return res.status(400).json({ msg: 'email already exist' });
     }
 
+
+    // check if he is the first user , if he is the first user , then make him admin
     const isFirstAccount = (await User.countDocuments({})) === 0;
+
+
+    // ternary operator
     const role = isFirstAccount ? 'admin' : 'user';
 
-
+    // create the user
     const user =  await User.create({name,email,password,role});
 
+
+    // create the user token  that contains the user id and name and role
     const userForToken = createTokenUser(user);
+
+    // create the jwt token
     let token =  createJwt(userForToken);
-    attachCookiesToResponse({res,})
+    attachCookiesToResponse({res,user:userForToken});
 
     res.status(200).json({ msg: 'user created',token });
 }
