@@ -7,6 +7,13 @@ const orderRouter = require('./routes/order');
 const productRouter = require('./routes/product');
 const reviewRouter = require('./routes/review');
 const userRouter = require('./routes/user');
+const cors = require('cors');
+const xss = require('xss-clean');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
+const fieUpload = require('express-fileupload');
+const rateLimiter = require('express-rate-limit');
+const { authMiddleware } = require('./middlewares/auth');
 
 const app = express();
 
@@ -36,11 +43,11 @@ app.get("/",(req,res)=>{
     return res.send("Welcome to Ecommerce Api");
 })
 
-app.use("/api/v1/auth",authRouter);
+app.use("/api/v1/auth",authMiddleware,authRouter);
 app.use("/api/v1/orders",orderRouter);
 app.use("/api/v1/products",productRouter);
 app.use("/api/v1/reviews",reviewRouter);
-app.use("/api/v1/user",userRouter);
+app.use("/api/v1/users",userRouter);
 
 app.use(notFound);  
 

@@ -1,7 +1,6 @@
-const CustomError = require('../errors');
 const { isTokenValid } = require('../utils/jwt');
 
-const authenticateUser = async (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
 
   // check first if send in header 
   let token;
@@ -43,4 +42,4 @@ const authorizeRoles = (...roles) => {
   };
 };
 
-module.exports = { authenticateUser, authorizeRoles };
+module.exports = { authMiddleware, authorizeRoles };
