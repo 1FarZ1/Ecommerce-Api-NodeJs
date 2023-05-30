@@ -15,6 +15,9 @@ app.use(express.urlencoded({extended:true}));
 app.get("/",(req,res)=>{
     return res.send("Welcome to Ecommerce Api");
 })
+
+app.use();
+
 app.use(notFound);  
 
 
