@@ -19,7 +19,6 @@ const authenticateUser = async (req, res, next) => {
   try {
     const payload = isTokenValid(token);
 
-    // Attach the user and his permissions to the req object
     req.user = {
       userId: payload.user.userId,
       role: payload.user.role,
