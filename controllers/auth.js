@@ -1,16 +1,29 @@
-// const User = require('../models/User')
+const User = require('../models/user');
+const { createJwt, attachCookiesToResponse } = require('../utils/jwt');
+const createTokenUser = require('../utils/createTokenUser');
 
 
 let register = async (req,res)=>{
-    const { username, email, password } = req.body;
-    if (!username || !password || !email) {
+    const { name, email, password } = req.body;
+    if (!name || !password || !email) {
         return res.status(400).json({ 
             msg: 'fill all the credentials',
          })
     }
-    let userData = {name:username,email,password}; 
-    const user =  await User.create(userData);
-    let token =  await user.createJWT();
+    const emailExist  = await User.findOne({email});
+    if(emailExist){
+        return res.status(400).json({ msg: 'email already exist' });
+    }
+
+    const isFirstAccount = (await User.countDocuments({})) === 0;
+    const role = isFirstAccount ? 'admin' : 'user';
+
+
+    const user =  await User.create({name,email,password,role});
+
+    const userForToken = createTokenUser(user);
+    let token =  createJwt(userForToken);
+    attachCookiesToResponse({res,})
 
     res.status(200).json({ msg: 'user created',token });
 }
