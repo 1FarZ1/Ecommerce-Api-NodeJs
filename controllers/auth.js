@@ -31,10 +31,10 @@ let register = async (req,res)=>{
     const userForToken = createTokenUser(user);
 
     // create the jwt token
-    let token =  createJwt(userForToken);
+    // let token =  createJwt(userForToken);
     attachCookiesToResponse({res,user:userForToken});
 
-    res.status(200).json({ msg: 'user created',token });
+    res.status(200).json({ msg: 'user created',userForToken });
 }
 let login  = async  (req,res)=>{    
     try {
@@ -50,9 +50,17 @@ let login  = async  (req,res)=>{
         if (!user.comparePassword(password)) {
             return res.status(400).json({ msg: 'incorrect password' })
         }    
-        const token = user.createJWT();
-    
-        res.status(200).json({ user: { name: user.name }, token })
+
+
+        // create the user token  that contains the user id and name and role
+        const userForToken = createTokenUser(user);
+
+        // create the jwt token
+        // let token =  createJwt(userForToken);
+
+        // create the cookies for web , with cookies 
+        attachCookiesToResponse({res,user:userForToken});    
+        res.status(200).json({ msg : "user logged in Successfully ", userForToken })
 
     } catch (error) {
         console.log(error);
@@ -61,13 +69,20 @@ let login  = async  (req,res)=>{
     } 
 }
 
-const logout  = (req,res)=>{
-    try {
-        
-    } catch (error) {
-        
-    }
-}
+const logout = async (req, res) => {
+ try {
+    // removing the cookie
+    res.cookie('token', 'logout', {
+        httpOnly: true,
+        expires: new Date(Date.now() + 1000),
+      });
+      res.status(StatusCodes.OK).json({ msg: 'user logged out!' });
+ } catch (error) {
+        console.log(error);
+        return res.status(500).json({ msg: 'something went wrong',error })
+ }
+};
+
 module.exports = {
     login,
     register,
