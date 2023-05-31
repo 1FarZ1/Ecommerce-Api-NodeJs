@@ -2,7 +2,7 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
 const checkPermissions = require('../utils/checkPermissions');
-const fakeStripeAPI = require('../utils/fakeStripeAPI');
+const fakeStripeAPI = require('../utils/fakeStripeApi');
 
 const getAllOrders = async (req, res) => {
       try {
