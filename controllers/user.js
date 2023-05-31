@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const createTokenUser = require('../utils/createTokenUser');
+const { attachCookiesToResponse } = require('../utils/jwt');
 
 let getAllUsers = async (req,res)=>{
     try {
@@ -22,6 +24,9 @@ let getUserById = async (req,res)=>{
 let UpdateUserPassword = async (req,res)=>{
     try {
         const { oldPassword, newPassword } = req.body;
+        if(!oldPassword || !newPassword){
+            return res.status(400).json({ msg: 'oldpassword or new password invalid' })
+        }
         const user = await User.findById(req.user.userId);
         if(!user){
             return res.status(400).json({ msg: 'no user found' })
@@ -47,6 +52,10 @@ let UpdateUser = async (req,res)=>{
         user.name = name;
         user.email = email;
         await user.save();
+        const tokenUser = createTokenUser(user);
+        attachCookiesToResponse({ res, user: tokenUser });
+        return res.status(200).json({msg:"user updated successfully",user:tokenUser});
+
     } catch (error) {
         return res.status(500).json({msg:"server error" , error:error});
     }
@@ -54,8 +63,7 @@ let UpdateUser = async (req,res)=>{
 
 let getCurrentUser = async (req,res)=>{
     try {
-        const user = await User.findById(req.user.userId).select("-password");
-        return res.status(200).json({user});
+        return res.status(200).json({user:req.user});
     } catch (error) {
         return res.status(500).json({msg:"server error" , error:error});
     }
