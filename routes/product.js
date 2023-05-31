@@ -13,12 +13,12 @@ router
   router
   .route('/:id')
   .get(getSingleProduct)
-  .patch([authMiddleware, authMiddleware('admin')], updateProduct)
-  .delete([authMiddleware, authMiddleware('admin')], deleteProduct);
+  .patch([authMiddleware, authorizeRoles('admin')], updateProduct)
+  .delete([authMiddleware, authorizeRoles('admin')], deleteProduct);
   
   router
     .route('/uploadImage')
-    .post([authMiddleware, authMiddleware('admin')],uploadImage);
+    .post([authMiddleware, authorizeRoles('admin')],uploadImage);
   // router.route('/:id/reviews').get(getSingleProductReviews);
 
 module.exports = router;
