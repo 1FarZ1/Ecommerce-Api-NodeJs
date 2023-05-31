@@ -19,36 +19,30 @@
 ### Auth Routes
 
 - Create a new User (first used flagged as admin)
-  - POST |  /api/v1/auth/register
+  - ```POST |  /api/v1/auth/register```
 
 - Login User
-  - POST |  /api/v1/auth/login
+  - ```POST |  /api/v1/auth/login```
 
 ### User Routes
 
 - Get Users (only for admin)
-  - GET |  /api/v1/users
-
+  - ```GET |  /api/v1/users```
 - Get Single Users
-  - GET |  /api/v1/users/{id}
-
+  - ```GET |  /api/v1/users/{id}```
 - Update current User
-  - Patch |  /api/v1/users/update
-  
+  - ```PUT |  /api/v1/users/me```
 - Update Current User Password
-  - Patch |  /api/v1/users/update/password
-
+  - ```PUT |  /api/v1/users/me/updatepassword```
 - Get current User signed In
-  - Patch |  /api/v1/users/me
-
+  - ```GET |  /api/v1/users/me```
 - Get Users Count
-  - GET |  /api/v1/users/count
+  - ```GET |  /api/v1/users/get/count```
 
 ## Review Routes
 
 - Create Review
-  - POST |  /api/v1/reviews
-
+  - ```POST |  /api/v1/reviews```
 - Get Reviews
   - GET |  /api/v1/reviews
 
@@ -142,4 +136,4 @@
 
 - for any contrubution you re more then Welcomed
 
-```Enjoy it```
+```Enjoy it While it Lasts```
