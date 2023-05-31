@@ -38,69 +38,69 @@
 
 ## Review Routes
 * Create Category
-- POST |  /api/v1/reviews
+   - POST |  /api/v1/reviews
 
 * Get Categories
-- GET |  /api/v1/reviews
+   - GET |  /api/v1/reviews
 
 * Get Single Category
-- GET |  /api/v1/reviews/{id}
+   - GET |  /api/v1/reviews/{id}
 
 * Update Category
-- PUT |  /api/v1/reviews/{id}
+   - PUT |  /api/v1/reviews/{id}
 
 * Delete Category
-- DELETE |  /api/v1/reviews/{id}
+   - DELETE |  /api/v1/reviews/{id}
 
 ## Product Routes
 * Create Product
-- POST |  /api/v1/products
+   - POST |  /api/v1/products
 
 * Get Products
-- GET |  /api/v1/products
+   - GET |  /api/v1/products
 
 * Get Single Category
-- GET |  /api/v1/products/{id}
+   - GET |  /api/v1/products/{id}
 
 * Get Prodcut Counts
-- GET |  /api/v1/products/get/count
+   - GET |  /api/v1/products/get/count
 
 * Get Featured Prodcut Counts
-- GET |  /api/v1/products/get/featured/{count}
+   - GET |  /api/v1/products/get/featured/{count}
 
 * Upload Galley Images
-- POST |  /api/v1/products/gallery-images/{id}
+   - POST |  /api/v1/products/gallery-images/{id}
 
 * Update Product
-- PUT |  /api/v1/products
+   - PUT |  /api/v1/products
 
 * Delete Product
-- DELETE |  /api/v1/products/{id}
+   - DELETE |  /api/v1/products/{id}
 
 ## Orders Routes
 * Create Order
-- POST |  /api/v1/orders
+   - POST |  /api/v1/orders
 
 * Get Orders
-- GET |  /api/v1/orders
+   - GET |  /api/v1/orders
 
 * Get Single Order
-- GET |  /api/v1/orders/{id}
+   - GET |  /api/v1/orders/{id}
 
 * Get Total Order Count
-- GET |  /api/v1/orders/get/count
+   - GET |  /api/v1/orders/get/count
 
 * Get Total Sales
-- GET |  /api/v1/orders/get/totalsales
+   - GET |  /api/v1/orders/get/totalsales
 
 * Get User Order
-- GET |  /api/v1/orders/get/usersorders/{userid}
+   - GET |  /api/v1/orders/get/usersorders/{userid}
 
 * Update Single Order
-- PUT |  /api/v1/orders/{id}
+   - PUT |  /api/v1/orders/{id}
 
 * Delete Single Order
-- DELETE |  /api/v1/orders/{id}
+   - DELETE |  /api/v1/orders/{id}
 
 
 ## Tech used
