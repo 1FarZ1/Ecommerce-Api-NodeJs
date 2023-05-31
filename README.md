@@ -88,6 +88,9 @@
 - Delete Single Order
   - ```DELETE |  /api/v1/orders/{id}```
 
+## links 
+ - postman link : https://bold-star-484214.postman.co/workspace/Team-Workspace~c069bf4c-0db1-4e9a-875e-5dd4df65a669/collection/21855039-e1fd0f5e-943b-4ff6-a16b-34f62af44b65?action=share&creator=21855039
+
 ## Tech used
 
 - Nodejs
