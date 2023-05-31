@@ -21,7 +21,7 @@ let getSingleOrder = async (req, res) => {
     if(!order){
         return res.status(404).json({
             success: false,
-            error: 'Order with id ${id} not found',
+            error: `Order with id ${id} not found`,
         });
     }
     checkPermissions(req.user,order.user);
@@ -77,19 +77,25 @@ const createOrder = async (req, res) => {
         image,
         product: _id,
       };
-      // add item to order
       orderItems = [...orderItems, singleOrderItem];
       // calculate subtotal
+
+      // price of the items
       subtotal += item.amount * price;
     }
-    // calculate total
+
+    // totol price including tax and shipping fee
     const total = tax + shippingFee + subtotal;
-    // get client secret
+
+
+    // create the payment intent
     const paymentIntent = await fakeStripeAPI({
       amount: total,
       currency: 'usd',
     });
   
+
+    // creating the order 
     const order = await Order.create({
       orderItems,
       total,
