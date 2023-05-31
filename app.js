@@ -43,11 +43,11 @@ app.get("/",(req,res)=>{
     return res.send("Welcome to Ecommerce Api");
 })
 
-app.use("/api/v1/auth",authMiddleware,authRouter);
+app.use("/api/v1/auth",authRouter);
 app.use("/api/v1/orders",orderRouter);
 app.use("/api/v1/products",productRouter);
 app.use("/api/v1/reviews",reviewRouter);
-app.use("/api/v1/users",userRouter);
+app.use("/api/v1/users",authMiddleware,userRouter);
 
 app.use(notFound);  
 

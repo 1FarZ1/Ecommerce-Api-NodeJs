@@ -9,11 +9,11 @@ const authMiddleware = async (req, res, next) => {
     token = authHeader.split(' ')[1];
   }
 
-
   // otherwise check if sent in cookies
   else if (req.cookies.token) {
     token = req.cookies.token;
   }
+
 
 
   if (!token) {
@@ -29,6 +29,7 @@ const authMiddleware = async (req, res, next) => {
 
     next();
   } catch (error) {
+    console.log(error);
     res.status(401).json({ msg: 'something went wrong ',error });
     }
 };
