@@ -2,6 +2,7 @@
 const Order = require('../models/order');
 const Product = require('../models/product');
 const checkPermissions = require('../utils/checkPermissions');
+const fakeStripeAPI = require('../utils/fakeStripeAPI');
 
 const getAllOrders = async (req, res) => {
       try {
@@ -46,8 +47,63 @@ let getCurrentUserOrders = async (req, res) => {
     return res.status(200).json({orders,count:orders.length});
 }
 
-let createOrder = async (req, res) => {
-}
+
+
+  
+// need to revise this
+const createOrder = async (req, res) => {
+    const { items: cartItems, tax, shippingFee } = req.body;
+  
+    if (!cartItems || cartItems.length < 1) {
+        return res.status(400).json({ msg: 'No items in cart' });
+    }
+    if (!tax || !shippingFee) {
+        return res.status(400).json({ msg: 'Please provide tax and shipping fee' });
+    }
+  
+    let orderItems = [];
+    let subtotal = 0;
+  
+    for (const item of cartItems) {
+      const dbProduct = await Product.findbyId(item.product);
+      if (!dbProduct) {
+        return res.status(400).json({ msg: `No product with id : ${item.product}` });
+      }
+      const { name, price, image, _id } = dbProduct;
+      const singleOrderItem = {
+        amount: item.amount,
+        name,
+        price,
+        image,
+        product: _id,
+      };
+      // add item to order
+      orderItems = [...orderItems, singleOrderItem];
+      // calculate subtotal
+      subtotal += item.amount * price;
+    }
+    // calculate total
+    const total = tax + shippingFee + subtotal;
+    // get client secret
+    const paymentIntent = await fakeStripeAPI({
+      amount: total,
+      currency: 'usd',
+    });
+  
+    const order = await Order.create({
+      orderItems,
+      total,
+      subtotal,
+      tax,
+      shippingFee,
+      clientSecret: paymentIntent.client_secret,
+      user: req.user.userId,
+    });
+  
+    res
+      .status(200)
+      .json({ order, clientSecret: order.clientSecret });
+  };
 
 let updateOrder = async (req, res) => {
 
@@ -65,10 +121,6 @@ let updateOrder = async (req, res) => {
   
    return  res.status(200).json({ order });
 }
-
-
-
-
 
 
 
