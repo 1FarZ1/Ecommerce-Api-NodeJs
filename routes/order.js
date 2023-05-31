@@ -1,7 +1,28 @@
 
-const orderRouter = require("express").Router();
+const router =  require('express').Router();
+const {
+  authMiddleware,
+  authorizeRoles,
+} = require('../middlewares/auth');
 
-orderRouter.route("/").get();
+const {
+  getAllOrders,
+  getSingleOrder,
+  getCurrentUserOrders,
+  createOrder,
+  updateOrder,
+} = require('../controllers/order');
 
+router
+  .route('/')
+  .post(authMiddleware, createOrder)
+  .get(authMiddleware, authorizePermissions('admin'), getAllOrders);
 
-module.exports = orderRouter;
+router.route('/me').get(authMiddleware, getCurrentUserOrders);
+
+router
+  .route('/:id')
+  .get(authMiddleware, getSingleOrder)
+  .patch(authMiddleware, updateOrder);
+
+module.exports = router;
