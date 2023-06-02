@@ -22,6 +22,8 @@ const authMiddleware = async (req, res, next) => {
   try {
     const payload = isTokenValid(token);
 
+    // do something if not valid 
+
     req.user = {
       userId: payload.user.userId,
       role: payload.user.role,
